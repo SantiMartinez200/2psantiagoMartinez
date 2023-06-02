@@ -1,0 +1,15 @@
+#map { 
+    height: 150px; 
+}
+
+body {
+    background-color:chocolate;
+}
+
+#match {
+    text-align: center;
+}
+
+button {
+    margin: 0 auto;
+}
