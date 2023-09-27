@@ -1,0 +1,24 @@
+body{
+  background: url("../../TRABAJO_PRACTICO/Multimedia/school-building-illustration-vector.jpg") #000;
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1em;
+  color: white;
+}
+
+.menuDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button{
+  margin: 5px;
+}
