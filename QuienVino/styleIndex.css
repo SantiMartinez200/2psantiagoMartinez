@@ -1,24 +1,18 @@
-body{
-  background: url("../../TRABAJO_PRACTICO/Multimedia/school-building-illustration-vector.jpg") #000;
-  background-size:cover;
-  background-repeat: no-repeat;
+
+body:before {
+  filter: blur(2px);
+  content: "";
+  position: absolute;
+  height: 20%; 
+  width: 20%;
+ background: url("Multimedia/ninos-escuela-levantando-mano-aula_107420-85511.png") ;
+  background-size: cover;
+  z-index: -1;
+  -webkit-transform: scale(5);
+  -webkit-transform-origin: top left;
 }
 
-a:link,
-a:visited {
+a:link, a:visited, a:active{
   text-decoration: none;
-  margin: auto;
-  font-weight: bold;
-  font-size: 1em;
   color: white;
-}
-
-.menuDiv{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button{
-  margin: 5px;
 }

@@ -1,107 +1,17 @@
-body {
-  font-family: monospace;
-  background: url("../../Multimedia/ninos-escuela-levantando-mano-aula_107420-85511.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-.container-tableAlumnos {
-  width: 90%;
-  background: white;
-  margin: 50px auto;
-  display: grid;
-  grid-template-columns: repeat(5, 20%);
-  grid-auto-rows: 25px;
-  box-shadow: 0 0 10px #757474;
-}
-
-.table-title {
-  grid-column-start: 1;
-  grid-column-end: 6;
-  color: white;
-  background-color: #f65868;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 1.5em;
-  padding-top: 8px;
-}
-
-.table-header,
-.table-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.table-header {
-  font-weight: bold;
-  font-size: 1.6em;
-}
-
-.table-item {
-  padding: 5px;
-  font-size: 1.2em;
-}
-
-/*   STYLE INSERTAR    */
-
-.container-add {
-  width: 90%;
-  margin: 50px auto;
-}
-
-.container__title {
-  margin: 0;
-  padding: 10px;
-  background: rgba(120, 65, 40, 1);
-  color: white;
-  font-size: 2em;
-  text-align: center;
-}
-
-.container__form {
-  background-color: white;
-  box-shadow: 0 0 10px #757474;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.container__label {
-  font-size: 1.2em;
+body:before {
+  filter: blur(2px);
+  content: "";
+  position: absolute;
+  height: 20%; 
   width: 20%;
+ background: url("../../Multimedia/ninos-escuela-levantando-mano-aula_107420-85511.png") ;
+  background-size: cover;
+  z-index: -1;
+  -webkit-transform: scale(5);
+  -webkit-transform-origin: top left;
 }
 
-.container__input {
-  width: 25%;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  font-size: 1em;
-  padding: 5px;
-}
-
-.btn,
-.btn-outline-dark {
-  margin: 15px auto;
-}
-
-.regresar-container {
+a:link, a:visited, a:active{
   text-decoration: none;
-  border-radius: 3px;
-  display: grid;
-  margin: 50px auto;
-  padding: 5px;
-  text-align: center;
+  color: #ffff;
 }
-a:link,
-a:visited {
-  text-decoration: none;
-  margin: auto;
-  font-weight: bold;
-  font-size: 1em;
-  color: black;
-}
-

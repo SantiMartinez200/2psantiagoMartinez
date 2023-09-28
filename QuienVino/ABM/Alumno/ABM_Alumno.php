@@ -47,7 +47,7 @@
             ?> <!--      VINO DESDE LA ASISTENCIA         -->
             <div class="col">
               <label for="" class="container__label">DNI:</label>
-              <input type="number" class="container__input" name="dni" value="<?php echo ($id) ?>">
+              <div><input type="number" class="container__input" name="dni" value="<?php echo ($id) ?>"></div>
             </div>
             <?php
           }

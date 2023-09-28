@@ -15,17 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   </head>
 
   <body>
-    <div class="container-add">
-      <h2 class="container__title">Registrar Asistencia</h2>
-      <form class="container__form" action="consultaDNI.php" method="POST"><label for=""
-          class="container__label">Dni:</label><input type="number" class="container__input" name="dni">
-        <input type="submit" value="Registrar Asistencia" class="btn btn-outline-dark">
-      </form>
-    </div>
-    <div class="regresar-container">
-      <button type="button" class="btn btn-light"><a href="../../../QuienVino/index.php">Volver al
-          inicio</a></button>
-      <div>
+    <div class="container mt-2">
+      <div class="container col-10">
+        <div id="textContainer" class="d-flex justify-content-center p-3 mb-2 bg-danger text-white rounded">
+          <h2 class="container__title">Registrar Asistencia</h2>
+        </div>
+
+        <form class="form text-center p-3 mb-2 bg-light text-black col-12" action="consultaDNI.php" method="POST">
+          <div class="row">
+            <div class="col">
+              <label for="" class="container__label"><p class="text-dark">Dni:</p></label><div><input type="number" class="container__input" name="dni"></div>
+            </div>
+            <div class="col mt-3 d-flex justify-content-center">
+              <div><input type="submit" value="Registrar Asistencia" class="btn btn-outline-danger"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-danger"><a href="../../../QuienVino/index.php">Volver al
+            inicio</a></button>
+      </div>
   </body>
 
   </html>
@@ -63,12 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 inicio.</a></button>
             <button type="button" class="btn btn-light"><a href="../../QuienVino/MarcarAsistencia/consultaDNI.php">
                 Dejame consultar otro DNI.</a></button>
-            <button type="button" class="btn btn-light"><a href="../../QuienVino/ABM/Alumno/ABM_Alumno.php?dni=<?php echo($consultarDni) ?>">
-                        Deseo registrar el alumno. </a></button>
-                    <div>
-                </body>
+            <button type="button" class="btn btn-light"><a
+                href="../../QuienVino/ABM/Alumno/ABM_Alumno.php?dni=<?php echo ($consultarDni) ?>">
+                Deseo registrar el alumno. </a></button>
+            <div>
+        </body>
 
-                </html>
+        </html>
         <?php
       } elseif (($trayendo != NULL) && ($trayendoAsis != NULL)) { ?>
         <!DOCTYPE html>
@@ -137,8 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
           <div class="regresar-container">
             <button type="button" class="btn btn-light"><a href="../../QuienVino/index.php">Volver al
                 inicio</a></button>
-            <button type="button" class="btn btn-light"><a
-                href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar otra asistencia</a></button>
+            <button type="button" class="btn btn-light"><a href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar
+                otra asistencia</a></button>
             <div>
         </body>
         <?php
@@ -210,15 +221,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
           <div class="regresar-container">
             <button type="button" class="btn btn-light"><a href="../../QuienVino/index.php">Volver al
                 inicio</a></button>
-            <button type="button" class="btn btn-light"><a
-                href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar otra asistencia</a></button>
+            <button type="button" class="btn btn-light"><a href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar
+                otra asistencia</a></button>
             <div>
         </body>
         <?php
         $queryAsistencias->free_result();
       }
     } else {
-      echo "<script>alert('Existió algún vacio'); window.location='../MarcarAsistencia/consultaDNI.php'</script>";
+      echo "<script>alert('El campo está vacio'); window.location='../MarcarAsistencia/consultaDNI.php'</script>";
     }
   }
 

@@ -10,15 +10,28 @@
 </head>
 
 <body>
-    <div class="p-3 mb-2 bg-light text-dark">
-    <h1 class="h1title">Bienvenido al sistema de asistencias.</h1>
-    <h3 class="h3title">Puedes elegir entre dar de alta un alumno o profesor, o registrar una asistencia consultando el DNI del alumno.</h3>
-  </div>
-    <div class="menuDiv">
-    <button class="btn btn-primary btn-lg"><a href="../../QuienVino/ABM/Alumno/ABM_Alumno.php">Alumno</a></button>
-    <button class="btn btn-primary btn-lg"><a href="../../QuienVino/ABM/Profesor/ABM_Profesor.php">Profesor</a></button>
-    <button class="btn btn-primary btn-lg"><a href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar Asistencia</a></button>
+  <div class="container bg-light mt-2">
+    <div class="row text-center">
+      <h1 class="h1title">¿QuienVino?</h1>
     </div>
+    <div class="row text-center">
+      <div class="col">
+        <h3>Vino? Registre su asistencia</h3>
+      </div>
+      <div class="col">
+        <h3>NoEstá? Dése de alta</h3>
+      </div>
+      <div class="col">
+        <h3>NoQuiereEstar? Dése de baja</h3>
+      </div>
+    </div>
+  </div>
+  <div class="container d-flex justify-content-center w-100 bg-secondary text-center">
+    <button class="btn btn-primary btn-lg border m-2"><a href="../../QuienVino/ABM/Alumno/ABM_Alumno.php">Alumno</a></button>
+    <button class="btn btn-success btn-lg border m-2"><a href="../../QuienVino/ABM/Profesor/ABM_Profesor.php">Profesor</a></button>
+    <button class="btn btn-danger btn-lg border m-2"><a href="../../QuienVino/MarcarAsistencia/consultaDNI.php">Registrar
+        Asistencia</a></button>
+  </div>
 </body>
 <script src="../TRABAJO_PRACTICO/js/bootstrap.bundle.min.js"></script>
 
