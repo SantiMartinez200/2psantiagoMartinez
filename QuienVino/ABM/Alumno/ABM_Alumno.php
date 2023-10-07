@@ -1,8 +1,7 @@
 <?php
-//primer pantalla: indexhtml con una cajita para poner el DNI y poner CONSULTAR
-//Un menú que diga ALUMNO y otro PROFESOR, que lleven a sus pantallas correspondientes y dar un ABM de cada uno.
-//Usar BoostStrap
-//ABM : Alta-Baja-Modificacion
+include("../../../QuienVino/BD/conn.php");
+include("../../../QuienVino/Clases/Persona.php");
+include("../../../QuienVino/Clases/Alumno.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,10 +15,61 @@
 </head>
 
 <body>
-  <div class="p-3 mb-2 bg-light text-dark">
-    <h1 class="h1title">ABM del alumno.</h1>
-    <p><b>A</b>lta <b>B</b>aja <b>M</b>odificación.</p>
-  </div>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a href="../../../QuienVino/index.php">
+        <div class="redondo">
+          <img src="../../../QuienVino/Multimedia/logo.png" class="logo">
+        </div>
+      </a>
+      <div class="d-flex justify-content-end">
+        <h1 class="text-light"><b>Registros</b></h1>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button"
+              data-bs-toggle="dropdown">Asistencias</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/listarAsistencias.php">Listar
+                  asistencias</a></li>
+              <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/contarAsistencias.php">Contar
+                  asistencias</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown text-light">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button"
+              data-bs-toggle="dropdown">Registros</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="./ABM_Alumno.php">Alumno</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">Contacto</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="#">Instagram</a></li>
+              <li><a class="dropdown-item text-dark" href="#">Facebook</a></li>
+              <li><a class="dropdown-item text-dark" href="#">Linkedin</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="nav-item dropstart">
+      <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <img src="../../../QuienVino/Multimedia/config.png" alt="" class="img-fluid config" style="margin-right: 5px;">
+      </a>
+      <ul class="dropdown-menu text-dark">
+        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/parametros.php">Parámetros</a></li>
+        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="container col-10">
     <div id="textContainer" class="d-flex justify-content-center p-3 mb-2 bg-primary text-white rounded">
@@ -29,49 +79,31 @@
     <form class="form text-center p-3 mb-2 bg-light text-black col-12" action="../Alumno/Alta.php" method="POST">
       <div class="row">
         <div class="col">
-          <label for="" class="container__label">Nombre:</label>
-          <div class="d-flex justify-content-center"><input type="text" class="container__input" name="nombre"></div>
+          <label for="nombre" class="container__label">Nombre:</label>
+          <div class="d-flex justify-content-center"><input type="text" class="container__input" name="nombre"
+              id="nombre"></div>
         </div>
-        <div class="col"><label for="" class="container__label">Apellido:</label>
-          <div class="d-flex justify-content-center"><input type="text" class="container__input" name="apellido"></div>
+        <div class="col"><label for="apellido" class="container__label">Apellido:</label>
+          <div class="d-flex justify-content-center"><input type="text" class="container__input" name="apellido"
+              id="apellido"></div>
         </div>
       </div>
       <div class="row">
         <?php //////////////////////////////////////// ?>
-        <?php
-
-        //echo ($id);
-        if (isset($_GET["dni"])) {
-          if (!empty($_GET["dni"])) {
-            $id = $_GET["dni"];
-            ?> <!--      VINO DESDE LA ASISTENCIA         -->
-            <div class="col">
-              <label for="" class="container__label">DNI:</label>
-              <div><input type="number" class="container__input" name="dni" value="<?php echo ($id) ?>"></div>
-            </div>
-            <?php
-          }
-        } else { //viene desde esta página
-          ?>
-          <div class="col">
-            <label for="" class="container__label">DNI:</label>
-            <div><input type="number" class="container__input" name="dni"></div>
-          </div>
-          <?php
-        }
-        ?>
+        <div class="col">
+          <label for="identificacion" class="container__label">DNI:</label>
+          <div><input type="number" class="container__input" name="dni" id="identificacion"></div>
+        </div>
         <?php //////////////////////////////////////// ?>
         <div class="col">
-          <label for="" class="container__label">Fecha de nacimiento:</label>
-          <div><input type="date" class="container__input" name="fechaNacimiento"></div>
+          <label for="fechado" class="container__label">Fecha de nacimiento:</label>
+          <div><input type="date" class="container__input" name="fechaNacimiento" id="fechado"></div>
         </div>
       </div>
       <div class="col-12 text-center">
         <input type="submit" value="Registrar Alumno" class="btn btn-outline-primary">
       </div>
     </form>
-
-
   </div>
   <div class="d-flex justify-content-center">
     <div class="col-10 text-center">
@@ -82,37 +114,40 @@
           </tr>
           <tr>
             <th scope="col">DNI</th>
-            <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">Nombre</th>
             <th scope="col">Fecha de Nacimiento</th>
             <th scope="col">Operación</th>
           </tr>
         </thead>
         <tbody>
-
           <?php
-          include("../../../QuienVino/BD/conn.php");
-          $BD = Conexion::connect();
-          $selectAlumnos = mysqli_query($BD, "SELECT * FROM alumno");
+
+          $BD = new Conexion();
+          $query = Alumno::listarAlumnos();
+
+          $ejecutar = $BD->ejecutar($query);
+          $listado = $ejecutar;
           ?>
           <?php
-          while ($row = mysqli_fetch_assoc($selectAlumnos)) { ?>
+          while ($row = mysqli_fetch_assoc($listado)) { ?>
             <tr>
               <td>
                 <?php print($row["dni"]); ?>
               </td>
               <td>
-                <?php print($row["nombre"]); ?>
+                <?php print($row["apellido"]); ?>
               </td>
               <td>
-                <?php print($row["apellido"]); ?>
+                <?php print($row["nombre"]); ?>
               </td>
               <td>
                 <?php print($row["fecha_nacimiento"]); ?>
               </td>
               <td><a href="../../ABM/Alumno/Modificacion.php?dni=<?php echo ($row["dni"]) ?>"
-                  class="table__item__modify">Actualizar</a>
-                <a href="../../ABM/Alumno/Baja.php?dni=<?php echo ($row["dni"]) ?>" class="table__item__link">Eliminar</a>
+                  class="link-dark table__item__modify">Actualizar</a>
+                <a href="../../ABM/Alumno/Baja.php?dni=<?php echo ($row["dni"]) ?>"
+                  class="link-dark table__item__link">Eliminar</a>
               </td>
             </tr>
 
@@ -120,20 +155,27 @@
             <!--//////////////////////////////////////////////////////////////////////-->
             <?php
           }
+          $BD->killConn();
           ?>
         </tbody>
       </table>
     </div>
   </div>
-
   </div>
+
   <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-light"><a href="../../../QuienVino/index.php">Volver al
-        inicio</a></button>
-
-    <script src="../../ABM/Alumno/JS/confirmDelete.js"></script>
+    <a href="../../../QuienVino/index.php"><button type="button" class="btn btn-light text-primary">Volver al
+        inicio</button></a>
+    <script src="../../../QuienVino/Resources/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../QuienVino/ABM/Alumno/JS/confirmDelete.js"></script>
 
   </div>
+  <style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+  </style>
 </body>
 
 </html>
