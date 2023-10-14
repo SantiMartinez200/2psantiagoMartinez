@@ -26,7 +26,24 @@ body{
   background-color: rgb(61, 61, 61);
 }
 
+html{
+  overflow-x: hidden;
+}
+
 .config{
   width: 30px;
   height: 30px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(90, 90, 90);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
 }

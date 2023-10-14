@@ -2,6 +2,7 @@
 include("../BD/conn.php");
 include("../Clases/Persona.php");
 include("../Clases/Alumno.php");
+include("../Clases/Parametro.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@ include("../Clases/Alumno.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contabilidad de asistencias</title>
   <link rel="stylesheet" href="../../../QuienVino/Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../QuienVino/styleIndex.css">
+  <link rel="stylesheet" href="../styleIndex.css">
 </head>
 
 <body>
@@ -61,29 +62,20 @@ include("../Clases/Alumno.php");
         <img src="../../../QuienVino/Multimedia/config.png" alt="" class="img-fluid config" style="margin-right: 5px;">
       </a>
       <ul class="dropdown-menu text-dark">
-        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/parametros.php">Parámetros</a></li>
-        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión(NoDisp)</a></li>
+        <li><a class="dropdown-item text-dark" href="parametros.php">Parámetros</a></li>
+        <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión(NoDisp)</a></li> -->
       </ul>
     </div>
   </nav>
   <?php
-
-  //var_dump($alumnos);
   ?>
   <div class="d-flex justify-content-center">
     <div class="col-10">
       <div class="container m-2">
-        <!--<form action="listarAsistencias.php" method="POST">
-          <label for="campo">
-            <h3 class="text-light">Filtrar por alumno</h3>
-          </label>
-          <div class="d-flex "><input id="campo" class="form-control form-control-lg" type="text" name="dni">
-          </div>
-        </form>-->
         <table class="table table-hover text-center">
           <thead>
             <tr>
-              <th colspan="6" class="bg-primary text-white ">
+              <th colspan="5" class="bg-primary text-white ">
                 <h4>Cuenta de asistencias</h4>
               </th>
             </tr>
@@ -91,7 +83,6 @@ include("../Clases/Alumno.php");
               <th scope="col">DNI</th>
               <th scope="col">Apellido</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Rol</th>
               <th scope="col">Cantidad Asistencias</th>
               <th scope="col">Promedio</th>
             </tr>
@@ -102,6 +93,7 @@ include("../Clases/Alumno.php");
             $consulta = Alumno::contarAsistencias();
             $traerDatos = $conectarDB->ejecutar($consulta);
             $resultado = $traerDatos->fetch_all();
+            //var_dump($resultado);
             foreach ($resultado as $eachResult => $value) {
               ?>
               <tr>
@@ -126,24 +118,19 @@ include("../Clases/Alumno.php");
                   </div>
                 </td>
                 <td>
-                  <div class="mt-3">
-                    <?php echo ($value[4]); ?>
-                  </div>
-                </td>
-                <td>
                   <?php
-                  $asistencia = $value[4];
+                  $asistencia = $value[3];
                   $traerDias = Alumno::traerParametroAsistencias();
                   $ejecutar = $conectarDB->ejecutar($traerDias);
                   $dias_de_clase = $ejecutar->fetch_all();
-                  //var_dump($dias_de_clase[0][0]);
+                  $traerParametros = Parametro::traerParametros();
+                  $ejecutar = $conectarDB->ejecutar($traerParametros);
+                  $listadoParametros = $ejecutar->fetch_object();
                   $dia = intval($dias_de_clase[0][0]);
-                  //var_dump($dia);
-                  //cant_asistencias * 100 / dias_clases
                   $promedioAlumno = round($asistencia * 100 / $dia);
-                  if ($promedioAlumno >= 80) {
+                  if ($promedioAlumno >= $listadoParametros->promedio_promocion) {
                     echo "<div class='alert alert-success mt-1'> $promedioAlumno% </div>";
-                  } elseif (($promedioAlumno < 80) && ($promedioAlumno >= 60)) {
+                  } elseif (($promedioAlumno < 80) && ($promedioAlumno >= $listadoParametros->promedio_regularidad)) {
                     echo "<div class='alert alert-warning mt-1'> $promedioAlumno% </div>";
                   } else {
                     echo "<div class='alert alert-danger'> $promedioAlumno% </div>";
@@ -151,7 +138,6 @@ include("../Clases/Alumno.php");
                   ?>
                 </td>
               </tr>
-
               <?php
             }
             ?>
@@ -159,9 +145,7 @@ include("../Clases/Alumno.php");
         </table>
         <?php
         ?>
-
       </div>
-
     </div>
   </div>
   <style>

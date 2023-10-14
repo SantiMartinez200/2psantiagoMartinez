@@ -13,6 +13,10 @@ body{
   color:black;
 }
 
+a {
+  color: white;
+}
+
 .logo{
   height: 35px;
   width: 35px;

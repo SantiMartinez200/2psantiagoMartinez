@@ -8,7 +8,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
   <link rel="stylesheet" href="../../../QuienVino/Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../QuienVino/styleIndex.css">
+  <link rel="stylesheet" href="styleIndex.css">
 </head>
 
 <body>
@@ -58,7 +58,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
       </a>
       <ul class="dropdown-menu text-dark">
         <li><a class="dropdown-item text-dark" href="./Control/parametros.php">Parámetros</a></li>
-        <li><a class="dropdown-item text-dark" href="/Control/logOut.php">Cerrar Sesión</a></li>
+        <!-- <li><a class="dropdown-item text-dark" href="/Control/logOut.php">Cerrar Sesión</a></li> -->
       </ul>
     </div>
   </nav>
@@ -79,22 +79,36 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
           if (isset($_POST["dni"])) {
             if (!empty($_POST["dni"])) {
               $consultarDni = $_POST["dni"]; //traer el alumno
-              $consulta = Alumno::getAlumno($consultarDni);
-              $traerAlumno = $conectarDB->ejecutar($consulta);
-              $alumnos = $traerAlumno->fetch_all(); //acomodar en array
-              date_default_timezone_set('America/Argentina/Buenos_Aires');
-              $date = date("Y-m-d H:i:s");
-              if ($alumnos == NULL) {
-                echo "<div class='alert alert-danger mt-3'>El DNI no ha sido encontrado.</div>";
-
+              if (($consultarDni >= 99999999) || ($consultarDni <= 0)) {
+                echo "<div class='alert alert-danger mt-3'>El valor del DNI es inválido.";
               } else {
-                $n = $alumnos[0][1];
-                $a = $alumnos[0][2];
-                echo "<div class='alert alert-success mt-3'>Se ha registrado la asistencia de: $n $a </div>";
-                $consulta = Alumno::insertarAsistencia($consultarDni, $date);
-                $cargarAsistencia = $conectarDB->ejecutar($consulta);
+                $consulta = Alumno::getAlumno($consultarDni);
+                $traerAlumno = $conectarDB->ejecutar($consulta);
+                $alumnos = $traerAlumno->fetch_all(); //acomodar en array
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                $date = date("Y-m-d H:i:s");
+                if ($alumnos == NULL) {
+                  echo "<div class='alert alert-danger mt-3'>El DNI no ha sido encontrado.</div>";
+                } else {
+                  $n = $alumnos[0][1];
+                  $a = $alumnos[0][2];
+                  $trimmedDate = date("Y-m-d");
+                  $verificarFechaAsistencia = Alumno::verificarIngresoAsistencia($consultarDni,$trimmedDate);
+                  if ($verificarFechaAsistencia == False){
+                    echo "<div class='alert alert-success mt-3'>Se ha registrado la asistencia de: $n $a </div>";
+                    $consulta = Alumno::insertarAsistencia($consultarDni, $date);
+                    $cargarAsistencia = $conectarDB->ejecutar($consulta);
+                  }else{
+                    echo "<div class='alert alert-danger mt-3'>El alumno: $n $a Ya ha asistido hoy.</div>";
+                  }
+                  
+                  
+                  
+                  
+                }
+                $conectarDB->killConn();
               }
-              $conectarDB->killConn();
+
             } else {
               echo "<script>alert('El campo está vacio'); window.location='./index.php'</script>";
               $conectarDB->killConn();
@@ -104,6 +118,10 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
         ?>
         <div>
     </form>
+    <?php
+
+
+    ?>
   </div>
   <style>
     input[type="number"]::-webkit-inner-spin-button,

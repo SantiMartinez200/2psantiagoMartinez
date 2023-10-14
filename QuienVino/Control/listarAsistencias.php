@@ -11,7 +11,7 @@ include("../Clases/Alumno.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listado de asistencias</title>
   <link rel="stylesheet" href="../../../QuienVino/Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../QuienVino/styleIndex.css">
+  <link rel="stylesheet" href="../styleIndex.css">
 </head>
 
 <body>
@@ -61,8 +61,8 @@ include("../Clases/Alumno.php");
         <img src="../../../QuienVino/Multimedia/config.png" alt="" class="img-fluid config" style="margin-right: 5px;">
       </a>
       <ul class="dropdown-menu text-dark">
-        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/parametros.php">Parámetros</a></li>
-        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión(NoDisp)</a></li>
+        <li><a class="dropdown-item text-dark" href="parametros.php">Parámetros</a></li>
+        <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión(NoDisp)</a></li> -->
       </ul>
     </div>
   </nav>
@@ -93,7 +93,7 @@ include("../Clases/Alumno.php");
               <th scope="col">Apellido</th>
               <th scope="col">Nombre</th>
               <th scope="col">Fecha y Hora</th>
-              <th scope="col">Rol</th>
+              <th scope="col">Operacion</th>
             </tr>
           </thead>
           <tbody id="tableInfo">
@@ -121,7 +121,7 @@ include("../Clases/Alumno.php");
                   <?php echo ($value[4]); ?>
                 </td>
                 <td>
-                  <?php echo ($value[5]); ?>
+                  <a>Eliminar</a>
                 </td>
               </tr>
               <?php

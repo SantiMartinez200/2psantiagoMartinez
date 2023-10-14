@@ -12,13 +12,13 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parámetros</title>
   <link rel="stylesheet" href="../../../QuienVino/Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../QuienVino/styleIndex.css">
+  <link rel="stylesheet" href="../styleIndex.css">
 </head>
 
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <a href="index.php">
+      <a href="../index.php">
         <div class="redondo">
           <img src="../Multimedia/logo.png" class="logo">
         </div>
@@ -32,7 +32,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
         <ul class="navbar-nav">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown text-light">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Asistencias</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item text-dark" href="./listarAsistencias.php">Listar asistencias</a></li>
@@ -69,7 +69,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
   <div class="container d-flex justify-content-center align-items-center w-75 bg-light text-center mt-5 rounded p-2">
     <form action="./actualizarParametros.php" class="form-control rounded  p-3" method="POST">
       <div class="row"><label for="dni">
-          <h1>Parametros<h1>
+          <h2 class="form_control"><b>Parametros</b><h2>
         </label></div>
       <?php
       $conectarDB = new Conexion();
@@ -95,19 +95,21 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
             <label for=' <?php echo ($i) ?>'>
               <h3>
                 <?php
-                echo $cadaColumna[0]
+                  if ($cadaColumna[0]!="clave_ajuste"){
+                    echo $cadaColumna[0];
+                  }
                   ?>
               </h3>
             </label>
             <?php
-            if (is_numeric($listadoParametros[$cadaColumna[0]])) { ?>
+            if (is_numeric($listadoParametros[$cadaColumna[0]]) && $cadaColumna[0]!="clave_ajuste") { ?>
               <div class="col">
-                <input type='number' class="form-control-lg" value='<?php echo $listadoParametros[$cadaColumna[0]]?>' name = "<?php echo $i ?>">
+                <input type='number' class="form-control-lg" value='<?php echo $listadoParametros[$cadaColumna[0]]?>' name ="<?php echo $i ?>">
               </div>
               <?php
-            } elseif (is_string($listadoParametros[$cadaColumna[0]])) { ?>
+            } elseif (is_string($listadoParametros[$cadaColumna[0]]) && $cadaColumna[0]!="clave_ajuste") { ?>
               <div class="col">
-                <input type='text' class="form-control-lg" value='<?php echo $listadoParametros[$cadaColumna[0]]?>' name = "<?php echo $i ?>">
+                <input type='text' class="form-control-lg" value='<?php echo $listadoParametros[$cadaColumna[0]]?>' name ="<?php echo $i ?>">
               </div>
               <?php
             }
@@ -121,10 +123,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
         }
         ?>
       </div>
-      <input type="submit" class="btn btn-dark mt-2" value="Aplicar cambios">
-      <button id="reload" class="btn btn-dark mt-2">Descartar cambios</button>
-
-
+      <input type="submit" class="btn btn-dark mt-5" value="Aplicar cambios">
     </form>
   </div>
   <style>
@@ -135,6 +134,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
   </style>
 </body>
 <script src="../Resources/js/bootstrap.bundle.min.js"></script>
+<script src="reload.js"></script>
 
 </html>
 

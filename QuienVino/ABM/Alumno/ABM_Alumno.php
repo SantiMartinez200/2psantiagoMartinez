@@ -11,7 +11,7 @@ include("../../../QuienVino/Clases/Alumno.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ABM ALUMNO</title>
   <link rel="stylesheet" href="../../../QuienVino/Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../QuienVino/ABM/Alumno/CSS/styleAlumno.css">
+  <link rel="stylesheet" href="../../../QuienVino/styleIndex.css">
 </head>
 
 <body>
@@ -66,7 +66,7 @@ include("../../../QuienVino/Clases/Alumno.php");
       </a>
       <ul class="dropdown-menu text-dark">
         <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/parametros.php">Parámetros</a></li>
-        <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li>
+       <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li> -->
       </ul>
     </div>
   </nav>
@@ -76,7 +76,7 @@ include("../../../QuienVino/Clases/Alumno.php");
       <h2 class="container__title">Registrar Alumno</h2>
     </div>
 
-    <form class="form text-center p-3 mb-2 bg-light text-black col-12" action="../Alumno/Alta.php" method="POST">
+    <form class="form text-center p-3 mb-2 bg-light text-black col-12 rounded" action="Alta.php" method="POST">
       <div class="row">
         <div class="col">
           <label for="nombre" class="container__label">Nombre:</label>
@@ -110,7 +110,7 @@ include("../../../QuienVino/Clases/Alumno.php");
       <table class="table table-hover">
         <thead>
           <tr>
-            <th colspan="5" class="bg-primary text-white">Alumnos</th>
+            <th colspan="5" class="bg-primary text-white rounded">Alumnos</th>
           </tr>
           <tr>
             <th scope="col">DNI</th>
