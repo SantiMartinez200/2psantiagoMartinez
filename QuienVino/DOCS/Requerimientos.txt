@@ -19,3 +19,8 @@ El sistema de toma de asistencias debe utilizar:
 - El listado de los alumnos debe ser realizado alfabéticamente por apellido.
 
 - Diseñar una interfaz gráfica, con logotipos y nombres de proyecto.
+
+- Armar un archivo de Deploy.txt -Link a github, con pasos para poner en marcha el sistema.
+                                    Paso 1: URL
+                                    Paso 2: BD, Que puede arrancar vacía o cargada.
+                                    Paso 3: (para mas info, ir a GH, Ver un README o DEPLOY)

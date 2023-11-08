@@ -1,8 +1,7 @@
 .redondo{
   width: 45px;
   height: 45px;
-  background-color: white;
-  border-radius: 50%;
+
   margin-right: 5px;
 }
 
@@ -26,7 +25,7 @@ body{
   background-color: rgb(61, 61, 61);
 }
 
-html{
+html,body{
   overflow-x: hidden;
 }
 
@@ -47,3 +46,31 @@ html{
 ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.2);
 }
+
+.logoindex{
+  width: 200px;
+  height: 200px;
+
+}
+
+
+#id{
+  text-decoration: none;
+  color: black;
+}
+
+.config{
+  filter: invert(100%) url(#color-filter);
+}
+
+.caja-index {
+    display: block;
+    max-height: 300px;
+  }
+
+  .mascara{
+      -webkit-mask: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/222579/bone300.svg);
+    mask: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/222579/bone300.svg);
+    mask-size: cover;
+    background: black;
+  }

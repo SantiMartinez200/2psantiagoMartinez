@@ -17,6 +17,7 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 <body>
   <?php
+  $var = "fireSweetAlert()";
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["dni"]) || isset($_POST["nombre"]) || isset($_POST["apellido"]) || isset($_POST["fechaNacimiento"])) {
       if (!empty($_POST["dni"]) && !empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["fechaNacimiento"])) {
@@ -31,7 +32,7 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
         $apellidoInsertar = $_POST["apellido"];
         $dniInsertar = $_POST["dni"];
         $fechaNacimiento = $_POST["fechaNacimiento"];
-        if ((strlen($nombreInsertar) < 30) && (strlen($apellidoInsertar) < 30) && (($dniInsertar < 99999999) && ($dniInsertar > 0)) && ($edad > $fetchParams->edad_minima)) {
+        if ((strlen($nombreInsertar) < 30) && (strlen($apellidoInsertar) < 30) && (($dniInsertar < 99999999) && ($dniInsertar > 0)) && (($edad >= $fetchParams->edad_minima) && ($fetchParams->edad_minima <> NULL))) {
           if ((preg_match("/^[a-zA-Z\p{L}\s]+$/i", $nombreInsertar)) && (preg_match("/^[a-zA-Z\p{L}\s]+$/i", $apellidoInsertar))) {
             $alumno = new Alumno($nombreInsertar, $apellidoInsertar, $dniInsertar, $fechaNacimiento);
             $sql = Alumno::insertAlumno($alumno);
@@ -39,25 +40,21 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
               $traerAlumno = $conectarDB->ejecutar($sql);
             } catch (mysqli_sql_exception $e) {
               if (str_contains($e, 'Duplicate entry')) {
-                echo "<script>alert('El DNI ya existe.');
-                  window.location='ABM_Alumno.php'</script>";
+                echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=1'</script>"; 
               } else {
-                die(print_r("<script>alert('Existió algún error desconocido, inténtelo denuevo.'); window.location='../Alumno/ABM_Alumno.php'</script>"));
+                die(print_r("<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=2'</script>"));
               }
             }
-            echo "<script>alert('Datos cargados con éxito');
-              window.location='../Alumno/ABM_Alumno.php'</script>";
+            echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=6'</script>";
           } else {
-            echo "<script>alert('No se pueden ingresar nombres ni apellidos con caracteres especiales ni números.');
-                  window.location='ABM_Alumno.php'</script>";
+             echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=3'</script>"; 
           }
         } else {
-          echo "<script>alert('Revise los parámetros ingresados.');
-                  window.location='ABM_Alumno.php'</script>";
+          echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=4'</script>";
         }
 
       } else {
-        echo "<script>alert('Existió algún dato vacio'); window.location='../Alumno/ABM_Alumno.php'</script>";
+        echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=5'</script>";
       }
       ?>
       <?php

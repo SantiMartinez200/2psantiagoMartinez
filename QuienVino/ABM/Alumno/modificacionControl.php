@@ -35,8 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
         var_dump($fetchParams);
         $caughtDate = $_POST["fechaNacimiento"];
 
-        //echo $caughtDNI;
-        if ((strlen($caughtName) < 30) && (strlen($caughtSurname) < 30) && (($dniColocado < 99999999) && ($dniColocado > 0) && ($DNIoriginal < 99999999) && ($DNIoriginal > 0)) && ($edad > $fetchParams->edad_minima)) {
+        if ((strlen($caughtName) < 30) && (strlen($caughtSurname) < 30) && (($dniColocado < 99999999) && ($dniColocado > 0) && ($DNIoriginal < 99999999) && ($DNIoriginal > 0)) && (($edad >= $fetchParams->edad_minima) && ($fetchParams->edad_minima <> NULL))) {
           if ((preg_match("/^[a-zA-Z\p{L}\s]+$/i", $caughtName)) && (preg_match("/^[a-zA-Z\p{L}\s]+$/i", $caughtSurname))) {
             $conectarDB = new Conexion();
             $conectarDB->connect();
@@ -44,26 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
             try {
               $ejecutar = $conectarDB->ejecutar($actualizarAlumno);
             } catch (mysqli_sql_exception $e) {
-              if (str_contains($e, 'Duplicate entry')) {
-                echo "<script>alert('El DNI ya existe.');
-                  window.location='ABM_Alumno.php'</script>";
-              } else {
-                die(print_r("<script>alert('Existió algún error desconocido, inténtelo denuevo.'); window.location='../Alumno/ABM_Alumno.php'</script>"));
+                if (str_contains($e, 'Duplicate entry')) {
+                  echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=1'</script>";
+                } else {
+                  die(print_r("<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=2'</script>"));
+                }
               }
+              echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=6'</script>";
+            } else {
+              echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=3'</script>";
             }
-            echo "<script>alert('Alumno modificado con éxito');
-              window.location='../Alumno/ABM_Alumno.php'</script>";
           } else {
-            echo "<script>alert('No se pueden ingresar nombres ni apellidos con caracteres especiales ni números.');
-                  window.location='ABM_Alumno.php'</script>";
+            echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=4'</script>";
           }
+
         } else {
-          echo "<script>alert('Revise los parámetros ingresados.');
-                  window.location='ABM_Alumno.php'</script>";
+          echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=5'</script>";
         }
-      } else {
-        echo "<script>alert('Existió algún vacio'); window.location='../Alumno/ABM_Alumno.php'</script>";
-      }
     }
 
     $conectarDB->killConn(); ?>
