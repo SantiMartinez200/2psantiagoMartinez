@@ -24,3 +24,22 @@ El sistema de toma de asistencias debe utilizar:
                                     Paso 1: URL
                                     Paso 2: BD, Que puede arrancar vacía o cargada.
                                     Paso 3: (para mas info, ir a GH, Ver un README o DEPLOY)
+
+- El sistema debe identificar si el Alumno cumple años, de lo contrario; seguir con su funcionamiento normalmente.
+
+- El sistema debe ser capaz de registrar asistencias tardías; una asistencia tardía es aquella que es cargada a un día anterior al actual.
+
+- El sistema debe ser capaz de registrar asistencias con retraso, con una tolerancia previamente seteada como parámetro.
+
+- El sistema debe tener un horario de clases seteado como parámetro.
+
+- Si un alumno no llega a horario de clases, y todavía llega más tarde que el horario con tolerancia; el sistema no debe cargar su asistencia.
+
+EXTRA:
+- El sistema debe tener una sección por separado, que va a indicar datos extras como:
+      * Los alumnos que promocionan
+      * Los alumnos que están regulares
+      * Los alumnos que están libres
+      * El alumno con más asistencias
+      * El alumno con menos asistencias
+      * Los alumnos SIN asistencias.

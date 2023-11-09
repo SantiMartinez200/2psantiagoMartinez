@@ -37,6 +37,7 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
             <ul class="dropdown-menu">
               <li><a class="dropdown-item text-dark" href="./listarAsistencias.php">Listar asistencias</a></li>
               <li><a class="dropdown-item text-dark" href="./contarAsistencias.php">Contar asistencias</a></li>
+              <li><a class="dropdown-item text-dark" href="./asistenciasTardiasIndex.php">Asistencias tardías</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -48,9 +49,13 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Contacto</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item text-dark" href="https://www.instagram.com/santiago_martinez03/?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D">Instagram</a></li>
-              <li><a class="dropdown-item text-dark" href="https://www.facebook.com/fede.garcia.37604/">Facebook</a></li>
-              <li><a class="dropdown-item text-dark" href="https://www.linkedin.com/in/santiago-mart%C3%ADnez-681b38238/">Linkedin</a></li>
+              <li><a class="dropdown-item text-dark"
+                  href="https://www.instagram.com/santiago_martinez03/?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D">Instagram</a>
+              </li>
+              <li><a class="dropdown-item text-dark" href="https://www.facebook.com/fede.garcia.37604/">Facebook</a>
+              </li>
+              <li><a class="dropdown-item text-dark"
+                  href="https://www.linkedin.com/in/santiago-mart%C3%ADnez-681b38238/">Linkedin</a></li>
             </ul>
           </li>
         </ul>
@@ -79,8 +84,9 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
     <div class="container d-flex justify-content-center align-items-center w-75 bg-light text-center mt-5 rounded p-2">
       <form action="./actualizarParametros.php" class="form-control rounded  p-3" method="POST">
         <div class="row">
-          <div class="bg-primary"><h2 class="form_control bg-primary text-light"><b>Parametros</b></div>
-            <h2>
+          <div class="bg-primary">
+            <h2 class="form_control bg-primary text-light"><b>Parametros</b></h2>
+          </div>
         </div>
         <div class="container d-flex justify-content-center">
           <div class="w-50 row">
@@ -112,12 +118,32 @@ Menú Configuración, que aparezca DIAS DE CLASE, guardarlos en la base de datos
               <input id="edadRegistro" type="number" class="form-control-lg text-center" name="2"
                 value="<?php print($listadoParametros->edad_minima); ?>">
             </div>
-            <div>
-              <input type="submit" class="btn btn-outline-primary mt-5" value="Aplicar cambios">
+            <div class="container d-flex justify-content-center">
+              <div class="row text-center">
+                <div class="col-md-12 text-center mt-3">
+                  <label for="tolerancia">
+                    <h4>Tolerancia</h4>
+                  </label>
+                  <input id="tolerancia" type="time" class="form-control-lg text-center" name="5"
+                    value="<?php print($listadoParametros->tolerancia); ?>">
+                </div>
+                <div class="col-md-12 text-center mt-3">
+                  <label for="horario">
+                    <h4>Horario de clases</h4>
+                  </label>
+                  <input id="horario" type="time" class="form-control-lg text-center" name="6"
+                    value="<?php print($listadoParametros->horario_fijo); ?>">
+                </div>
+              </div>
             </div>
           </div>
+  </div>
+          <div>
+            <input type="submit" class="btn btn-outline-primary mt-5" value="Aplicar cambios">
+          </div>
         </div>
-      </form>
+    </div>
+    </form>
     </div>
     <?php
   } else {

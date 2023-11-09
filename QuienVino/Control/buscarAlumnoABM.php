@@ -60,6 +60,8 @@ if (empty($buscar)) {
         class='link-dark table__item__asist'><img src='../../../QuienVino/Multimedia/plus-circle-fill.svg'
                         alt=''>
                     </a>";
+
+      
     }
     echo "</td>";
   }

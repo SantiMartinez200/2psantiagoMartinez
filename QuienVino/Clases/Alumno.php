@@ -1,8 +1,8 @@
 <?php
 require("Calculo_Trait.php");
-class Alumno extends Persona 
+class Alumno extends Persona
 {
-  Use Calculo;
+  use Calculo;
 
   public static function insertAlumno($object)
   {
@@ -16,7 +16,8 @@ class Alumno extends Persona
     $listarAlumnos = ("SELECT * FROM alumno ORDER BY apellido ASC");
     return $listarAlumnos;
   }
-  public static function listarAlumnosDNI($dni){
+  public static function listarAlumnosDNI($dni)
+  {
     $listarAlumnos = ("SELECT * FROM alumno WHERE dni LIKE '$dni%'");
     return $listarAlumnos;
   }
@@ -51,11 +52,13 @@ class Alumno extends Persona
     $insertarAsistencia = ("INSERT INTO asistencia (id,dni,fecha_asistencia) VALUES (null,'$dni','$fecha')");
     return $insertarAsistencia;
   }
-  public static function traerParametroAsistencias(){
+  public static function traerParametroAsistencias()
+  {
     $diasQuery = ("SELECT dias_clases from parametros");
     return $diasQuery;
   }
-  public static function obtenerEdad($fechaActual,$fechaNacimiento){
+  public static function obtenerEdad($fechaActual, $fechaNacimiento)
+  {
     $cortarFecha = substr($fechaNacimiento, -19, 4);
     $fechaInt = intval($cortarFecha);
     $cortarFechaActual = substr($fechaActual, -19, 4);
@@ -70,7 +73,7 @@ class Alumno extends Persona
     $conectarDB->connect();
     $ejecutar = $conectarDB->ejecutar($consultarAsistencia); //traje la asistencia del alumno.
     $fetchRow = $ejecutar->fetch_all();
-    
+
     if ($fetchRow == NULL) {
       return False;
     } else {
@@ -80,13 +83,15 @@ class Alumno extends Persona
 
   }
 
-  public static function busquedaDNI($dni){
-    $query=("SELECT a.id,a.dni,al.nombre,al.apellido,a.fecha_asistencia FROM (asistencia as a inner join alumno as al on a.dni=al.dni) WHERE a.dni LIKE '$dni%'");
+  public static function busquedaDNI($dni)
+  {
+    $query = ("SELECT a.id,a.dni,al.nombre,al.apellido,a.fecha_asistencia FROM (asistencia as a inner join alumno as al on a.dni=al.dni) WHERE a.dni LIKE '$dni%'");
     return $query;
   }
 
-  public static function getAsistencia($dni,$date){
-    $query=("SELECT a.id,a.dni,al.apellido,al.nombre,a.fecha_asistencia FROM alumno as al inner join asistencia as a on al.dni=a.dni WHERE a.dni='$dni' AND a.fecha_asistencia LIKE '$date%'");
+  public static function getAsistencia($dni, $date)
+  {
+    $query = ("SELECT a.id,a.dni,al.apellido,al.nombre,a.fecha_asistencia FROM alumno as al inner join asistencia as a on al.dni=a.dni WHERE a.dni='$dni' AND a.fecha_asistencia LIKE '$date%'");
     return $query;
   }
 
@@ -96,6 +101,13 @@ class Alumno extends Persona
     return $contarQuery;
   }
 
-  
+  public static function cumple($date,$dni)
+  {
+    $strTotime = strtotime($date);
+    $exacta = date("m-d", $strTotime);
+    $cumple = ("SELECT al.nombre,al.apellido FROM alumno as al WHERE fecha_nacimiento LIKE '%$exacta%' and al.dni = '$dni'");
+    return $cumple;
+  }
+
 }
 ?>

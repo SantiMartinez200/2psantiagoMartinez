@@ -16,10 +16,28 @@ $n = $alumnos[0][1];
 $a = $alumnos[0][2];
 $consulta = Alumno::insertarAsistencia($dni, $date);
 $cargarAsistencia = $conectarDB->ejecutar($consulta);
-if ($cargarAsistencia) {
-  echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()'</script>";
+$birthday = Alumno::cumple($date, $dni);
+$execBirthday = $conectarDB->ejecutar($birthday);
+$listBirthday = $execBirthday->fetch_all();
+if ($listBirthday != NULL) {
+  $cumple = true;
+  if ($cargarAsistencia) {
+    ?>
+    <script>
+    var birthday = <?php echo $cumple; ?>;
+    window.location.href='ABM_Alumno.php?var=fireSweetAlert()' + '&birthday=' + birthday;
+    </script>;
+    <?php
+  }
+  $conectarDB->killConn();
+}else{
+  if ($cargarAsistencia) {
+    echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()'</script>";
+  }
+  $conectarDB->killConn();
 }
-$conectarDB->killConn();
+
+
 
 
 

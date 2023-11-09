@@ -45,6 +45,8 @@ include("../../../QuienVino/Clases/Alumno.php");
                   asistencias</a></li>
               <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/contarAsistencias.php">Contar
                   asistencias</a></li>
+              <li><a class="dropdown-item text-dark"
+                  href="../../../QuienVino/Control/asistenciasTardiasIndex.php">Asistencias tardías</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown text-light">
@@ -193,7 +195,19 @@ include("../../../QuienVino/Clases/Alumno.php");
                       class="link-dark table__item__asist"><img src="../../../QuienVino/Multimedia/plus-circle-fill.svg"
                         alt="">
                       <?php
-                      if (isset($_GET["var"])) {
+                      if (isset($_GET["var"]) && isset($_GET["birthday"])) {
+                        if ($_GET["birthday"] == 1 || $_GET["birthday"] == true) {
+                          echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Hoy es su cumpleaños!',
+                          'se ha registrado su asistencia.',
+                          'info',
+                        )};
+                        </script>
+                        ";
+                          echo '<script>' . $_GET['var'] . '</script>';
+                        }
+                      } elseif (isset($_GET["var"])) {
                         echo "<script>function fireSweetAlert(){
                         Swal.fire(
                           'Se ha registrado la asistencia!',
@@ -203,7 +217,7 @@ include("../../../QuienVino/Clases/Alumno.php");
                         </script>
                         ";
                         echo '<script>' . $_GET['var'] . '</script>';
-                         ?>
+                        ?>
                       </a>
                       <?php
                       }
@@ -244,7 +258,7 @@ include("../../../QuienVino/Clases/Alumno.php");
   if (isset($_GET['var'])) {
     $sweetAlert = $_GET['var'];
     $errno = substr($sweetAlert, -1);
-    $ejec = substr($sweetAlert,0,-8);
+    $ejec = substr($sweetAlert, 0, -8);
     switch ($errno) {
       case 1:
         echo "<script>function fireSweetAlert(){

@@ -170,6 +170,18 @@ Toast.fire({
                             </script>";
                       $consulta = Alumno::insertarAsistencia($consultarDni, $date);
                       $cargarAsistencia = $conectarDB->ejecutar($consulta);
+                      $birthday = Alumno::cumple($date,$consultarDni);
+                      $execBirthday = $conectarDB->ejecutar($birthday);
+                      $listBirthday = $execBirthday->fetch_all();
+                      if ($listBirthday != NULL){
+                        echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Hoy $n $a cumple años!',
+                          'Se ha registrado su asistencia',
+                          'info'
+                        )};
+                        fireSweetAlert();</script>";
+                      }
                       return True;
                     } else {
                       echo "<script>
@@ -260,6 +272,18 @@ Toast.fire({
               </div>
               <?php
                   } else {
+                    $birthday = Alumno::cumple($date, $consultarDni);
+                    $execBirthday = $conectarDB->ejecutar($birthday);
+                    $listBirthday = $execBirthday->fetch_all();
+                    if ($listBirthday != NULL) {
+                      echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Hoy $n $a cumple años!',
+                          '$n $a YA HA ASISTIDO hoy.',
+                          'info'
+                        )};
+                        fireSweetAlert();</script>";
+                    }
                     ?>
               </div>
               </div>

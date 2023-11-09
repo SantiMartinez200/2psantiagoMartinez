@@ -51,7 +51,11 @@ include("../Clases/Alumno.php");
       echo "<td>$elementosBuscar[1]</td>";
       echo "<td>$elementosBuscar[3]</td>";
       echo "<td>$elementosBuscar[2]</td>";
-      echo "<td>$elementosBuscar[4]</td>";
+      $originalDate = $elementosBuscar[4];
+      $newDate = date('d/m/Y H:i', strtotime($originalDate));
+      echo "<td>
+            $newDate
+            </td>";
       echo "<td>
           <a class='link-dark table__item__link' onclick='alerta_eliminar($elementosBuscar[0])'>Eliminar</a>
         </td>";
@@ -61,7 +65,7 @@ include("../Clases/Alumno.php");
     echo "</tbody>";
     echo "</table>";
     echo "<div style='margin-bottom:20px; overflow-y: auto;></div>";
-    
+
   }
   ?>
 

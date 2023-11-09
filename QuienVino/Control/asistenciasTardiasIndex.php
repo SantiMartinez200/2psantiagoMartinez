@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contabilidad de asistencias</title>
+  <title>Asistencias tardías</title>
   <link rel="stylesheet" href="../Resources/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../styleIndex.css">
   <link rel="stylesheet" href="../Resources/css/sweetalert2.min.css" />
@@ -20,6 +20,7 @@
   <script src="../../QuienVino/Resources/js/bootstrap.bundle.min.js"></script>
   <script src="../../QuienVino/Resources/js/sweetalert2.all.min.js"></script>
   <script src="../../QuienVino/Resources/js/jquery-3.7.1.min.js"></script>
+  <script src="./JS/confirmDeleteTardio.js"></script>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark" overflow="hidden">
     <div class="container-fluid">
       <a href="../../QuienVino/index.php">
@@ -40,7 +41,8 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Asistencias</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item text-dark" href="./listarAsistencias.php">Listar asistencias</a></li>
-              <li><a class="dropdown-item text-dark" href="contarAsistencias.php">Contar asistencias</a></li>
+              <li><a class="dropdown-item text-dark" href="./contarAsistencias.php">Contar asistencias</a></li>
+              <li><a class="dropdown-item text-dark" href="./asistenciasTardiasIndex.php">Asistencias tardías</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -77,7 +79,7 @@
   </nav>
 
   <div class="container d-flex justify-content-center w-50 bg-light text-center mt-5 rounded p-2">
-    <form action="asistenciasTardiasControl.php" class="form-control rounded  p-3" method="POST">
+    <form action="asistenciasTardiasIndex.php" class="form-control rounded  p-3" method="POST">
       <div class="row"><label for="dni">
           <div id="textContainer" class="d-flex justify-content-center p-3 mb-2 bg-primary text-white rounded">
             <h1>Registre una asistencia tardía<h1>
@@ -92,22 +94,77 @@
       <input type="submit" class="btnMostrar btn btn-outline-primary mt-2" value="Registrar Asistencia">
     </form>
   </div>
-  <?php
-  if (isset($_GET["conf"]) && isset($_GET["dni"])) {
+</body>
+
+</html>
+<?php
+////////////////////////////////VALIDACIONES////////////////////////////////////////
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  date_default_timezone_set("America/Argentina/Buenos_Aires");
+  include("../BD/conn.php");
+  include("../Clases/Persona.php");
+  include("../Clases/Alumno.php");
+  include("../Clases/Parametro.php");
+  if (isset($_POST["dni"]) && isset($_POST["fecha_tardia"])) {
+    if (!empty($_POST["dni"]) && !empty($_POST["fecha_tardia"])) {
+      $fechaTardia = $_POST["fecha_tardia"];
+
+      $dni = $_POST["dni"];
+      $conectarDB = new Conexion;
+      $conectarDB->connect();
+      $queryVerificar = Alumno::verificarIngresoAsistencia($dni, $fechaTardia);
+      $fechaTardiaISO = date("Y-m-d", strtotime($fechaTardia));
+      if ($queryVerificar == false) {
+        try {
+          $query = Alumno::insertarAsistencia($dni, $fechaTardia);
+          $ejecutar = $conectarDB->ejecutar($query);
+        } catch (mysqli_sql_exception $e) {
+          if (str_contains($e, 'Cannot add or update a child row')) {
+            echo "<script>window.location='asistenciasTardiasIndex.php?conf=fatal'</script>";
+          } else {
+            die(print_r("<script>window.location='asistenciasTardiasIndex.php?conf=err2'</script>"));
+          }
+        }
+
+        ?>
+        <script>
+          var dni = <?php echo ($dni) ?>;
+          var fecha = <?php echo (json_encode($fechaTardiaISO)) ?>;
+          console.log(fecha);
+          window.location = "asistenciasTardiasIndex.php?conf=true" + "&dni=" + dni + "&fecha=" + fecha;
+        </script>
+        <?php
+      } else {
+        ?>
+        <script>
+          var fecha = <?php echo (json_encode($fechaTardiaISO)) ?>;
+          var dni = <?php echo ($dni) ?>;
+          window.location = "asistenciasTardiasIndex.php?conf=false" + "&dni=" + dni + "&fecha=" + fecha;
+        </script>
+        <?php
+      }
+    } else {
+      echo "<script>window.location='asistenciasTardiasIndex.php?conf=err1'</script>";
+    }
+  } else {
+    echo "<script>window.location='asistenciasTardiasIndex.php?conf=err2'</script>";
+  }
+} else {
+  if (isset($_GET["conf"])) {
     include("../BD/conn.php");
     include("../Clases/Persona.php");
     include("../Clases/Alumno.php");
     include("../Clases/Parametro.php");
-    $dni = $_GET["dni"];
-    $conectarDB = new Conexion;
-    $conectarDB->connect();
-    $alumno = Alumno::getAlumno($dni);
-    $ejecutarAlumno = $conectarDB->ejecutar($alumno);
-    $listarAlumno = $ejecutarAlumno->fetch_all();
-    $n = $listarAlumno[0][1];
-    $a = $listarAlumno[0][2];
     switch ($_GET["conf"]) {
       case 'true':
+        $dni = $_GET["dni"];
+        $conectarDB = new Conexion;
+        $conectarDB->connect();
+        $alumno = Alumno::getAlumno($dni);
+        $ejecutarAlumno = $conectarDB->ejecutar($alumno);
+        $listarAlumno = $ejecutarAlumno->fetch_all();
+        $n = $listarAlumno[0][1];
+        $a = $listarAlumno[0][2];
         echo "<script>
                               const Toast = Swal.mixin({
   toast: true,
@@ -127,8 +184,36 @@ Toast.fire({
 })  
 
                             </script>";
+        $date = Date("Y-m-d H:i:s");
+        $f = $_GET["fecha"];
+        $newDate = date('d/m/Y H:i', strtotime($f));
+        $birthday = Alumno::cumple($date, $dni);
+        $execBirthday = $conectarDB->ejecutar($birthday);
+        $listBirthday = $execBirthday->fetch_all();
+        if ($listBirthday != NULL) {
+          echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Hoy $n $a cumple años!',
+                          'Se ha registrado HOY la asistencia de $n $a para el $newDate',
+                          'info'
+                        )};
+                        fireSweetAlert();</script>";
+        }
         break;
       case 'false':
+        $f = $_GET["fecha"];
+        $dni = $_GET["dni"];
+        $conectarDB = new Conexion;
+        $conectarDB->connect();
+        $alumno = Alumno::getAlumno($dni);
+        $ejecutarAlumno = $conectarDB->ejecutar($alumno);
+        $listarAlumno = $ejecutarAlumno->fetch_all();
+        $n = $listarAlumno[0][1];
+        $a = $listarAlumno[0][2];
+        $dateAsis = Alumno::getAsistencia($dni, $f);
+        $execDateAsis = $conectarDB->ejecutar($dateAsis);
+        $fetchDateAsis = $execDateAsis->fetch_all();
+        $newDate = date('d/m/Y H:i', strtotime($fetchDateAsis[0][4]));
         echo "<script>
                               const Toast = Swal.mixin({
   toast: true,
@@ -144,13 +229,27 @@ Toast.fire({
 
 Toast.fire({
   icon: 'error',
-  title: '$n $a tiene asistencia en ese dia.'
+  title: '$n $a YA TIENE asistencia registrada el $newDate',
 })  
 
                             </script>";
+        $date = Date("Y-m-d H:i:s");
+        
+        
+        $birthday = Alumno::cumple($date, $dni);
+        $execBirthday = $conectarDB->ejecutar($birthday);
+        $listBirthday = $execBirthday->fetch_all();
+        if ($listBirthday != NULL) {
+          echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Hoy $n $a cumple años!',
+                          '$n $a YA TIENE asistencia registrada el $newDate',
+                          'info'
+                        )};
+                        fireSweetAlert();</script>";
+        }
         break;
-    }
-  }else{
+      case 'err1':
         echo "<script>
                               const Toast = Swal.mixin({
   toast: true,
@@ -170,8 +269,124 @@ Toast.fire({
 })  
 
                             </script>";
+        break;
+      case 'err2':
+        echo "<script>
+                              const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
-  ?>
-</body>
+})
 
-</html>
+Toast.fire({
+  icon: 'question',
+  title: 'No se pudo cargar la asistencia'
+})  
+
+                            </script>";
+        break;
+      case 'fatal':
+        echo "<script>
+                              const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'question',
+  title: 'No se encontró el DNI'
+})  
+
+                            </script>";
+        break;
+    }
+    $conf = $_GET["conf"];
+    if ($conf == 'true' || $conf == 'false') {
+      $date = $_GET["fecha"];
+      ?>
+      <div class="d-flex justify-content-center">
+        <div class="col-10">
+          <div class="container m-2">
+            <table class="table table-hover text-center w-100">
+              <thead>
+                <tr>
+                  <th colspan="6" class="bg-primary text-white ">
+                    <?php
+                    if ($conf == 'true') {
+                      ?>
+                      <h2>Asistencia Registrada</h2>
+                      <?php
+                    } else {
+                      ?>
+                      <h2>Asistencia Previa</h2>
+                      <?php
+                    }
+                    ?>
+                  </th>
+                </tr>
+                <tr>
+                  <th scope="col">ID de Asistencia</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">Apellido</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Fecha y Hora</th>
+                  <th scope="col">Operación</th>
+                </tr>
+              </thead>
+              <tbody id="tableInfo">
+                <?php
+                $consulta = Alumno::getAsistencia($dni, $date);
+                $ejecutar = $conectarDB->ejecutar($consulta);
+                $fetchAll = $ejecutar->fetch_all();
+                foreach ($fetchAll as $value) {
+                  ?>
+                  <tr>
+                    <td>
+                      <?php echo ($value[0]); ?>
+                    </td>
+                    <td>
+                      <?php echo ($value[1]); ?>
+                    </td>
+                    <td>
+                      <?php echo ($value[3]); ?>
+                    </td>
+                    <td>
+                      <?php echo ($value[2]); ?>
+                    </td>
+                    <td>
+                      <?php
+                      $originalDate = $value[4];
+                      $newDate = date("d/m/Y H:i", strtotime($originalDate));
+                      echo ($newDate);
+                      ?>
+                    </td>
+                    <td>
+                      <a class="link-dark table__item__link" onclick='alerta_eliminar(<?php echo ($value[0]) ?>)'>Eliminar</a>
+                    </td>
+                  </tr>
+                  <?php
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php
+    }
+  }
+}
+?>

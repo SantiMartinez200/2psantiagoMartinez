@@ -37,6 +37,7 @@ include("../Clases/Parametro.php");
             <ul class="dropdown-menu">
               <li><a class="dropdown-item text-dark" href="./listarAsistencias.php">Listar asistencias</a></li>
               <li><a class="dropdown-item text-dark" href="contarAsistencias.php">Contar asistencias</a></li>
+              <li><a class="dropdown-item text-dark" href="./asistenciasTardiasIndex.php">Asistencias tardías</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
