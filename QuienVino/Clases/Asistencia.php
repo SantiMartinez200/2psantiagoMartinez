@@ -5,6 +5,14 @@ Class Asistencia{
 
     return $deleteQuery;
   }
+
+  public static function calendarioAsistencia($fecha){
+    //ID de Asistencia	DNI	Apellido	Nombre	Fecha y Hora
+    $calendarQuery = ("SELECT a.id, al.dni, al.nombre, al.apellido, a.fecha_asistencia FROM asistencia as a inner join alumno as al on a.dni=al.dni WHERE fecha_asistencia LIKE '$fecha%'");
+    return $calendarQuery;
+  }
+
+  
 }
 
 ?>

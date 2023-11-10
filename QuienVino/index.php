@@ -58,6 +58,19 @@
                   href="https://www.linkedin.com/in/santiago-mart%C3%ADnez-681b38238/">Linkedin</a></li>
             </ul>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reportes</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="./Reportes/diario.php">Reporte de asistencias</a>
+              </li>
+              <li><a class="dropdown-item text-dark" href="./Reportes/promocionados.php">Reporte de
+                  promocionados</a></li>
+              <li><a class="dropdown-item text-dark" href="./Reportes/regulares.php">Reporte de
+                  regulares</a></li>
+              <li><a class="dropdown-item text-dark" href="./Reportes/libres.php">Reporte de libres</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
       <div class="nav-item dropstart">
@@ -71,7 +84,6 @@
         </ul>
       </div>
     </div>
-
   </nav>
   <div class="container  d-flex justify-content-center mt-5">
 
@@ -170,10 +182,10 @@ Toast.fire({
                             </script>";
                       $consulta = Alumno::insertarAsistencia($consultarDni, $date);
                       $cargarAsistencia = $conectarDB->ejecutar($consulta);
-                      $birthday = Alumno::cumple($date,$consultarDni);
+                      $birthday = Alumno::cumple($date, $consultarDni);
                       $execBirthday = $conectarDB->ejecutar($birthday);
                       $listBirthday = $execBirthday->fetch_all();
-                      if ($listBirthday != NULL){
+                      if ($listBirthday != NULL) {
                         echo "<script>function fireSweetAlert(){
                         Swal.fire(
                           'Hoy $n $a cumple años!',
