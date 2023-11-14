@@ -107,20 +107,23 @@
         include("./BD/conn.php");
         include("./Clases/Persona.php");
         include("./Clases/Alumno.php");
+        include("./Clases/Asistencia.php");
+        include("./Clases/Parametro.php");
         $conectarDB = new Conexion();
+        $conectarDB->connect();
+        $traerParametros = Parametro::traerParametros();
+        $execParams = $conectarDB->ejecutar($traerParametros);
+        $listParams = $execParams->fetch_all();
+        if ($listParams == NULL) {
+          $conectarDB->killConn();
+          echo ("<script>window.location='./Control/parametros.php?err=noParams'</script>");
+        } 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           if (isset($_POST["dni"])) {
             if (!empty($_POST["dni"])) {
               $consultarDni = $_POST["dni"]; //traer el alumno
               if (($consultarDni >= 99999999) || ($consultarDni <= 0)) {
-                echo "<script>function fireSweetAlert(){
-                        Swal.fire(
-                          'El DNI es inválido!',
-                          'Ingrese un DNI válido.',
-                          'error'
-                        )};
-                        fireSweetAlert();</script>";
-
+                echo "<script>Swal.fire('El DNI es inválido!', 'Ingrese un DNI válido.', 'error');</script>";
               } else {
                 $consulta = Alumno::getAlumno($consultarDni);
                 $traerAlumno = $conectarDB->ejecutar($consulta);
@@ -158,6 +161,30 @@ setTimeout(function(){
                   $a = $alumnos[0][2];
                   $trimmedDate = date("Y-m-d");
                   $verificarFechaAsistencia = Alumno::verificarIngresoAsistencia($consultarDni, $trimmedDate);
+                  ////////////////////////////////
+                  $traerParametros = Parametro::traerParametros();
+                  $execParams = $conectarDB->ejecutar($traerParametros);
+                  $listParams = $execParams->fetch_all();
+                  //var_dump($listParams);
+                  $time = date("H:i");
+                  //var_dump($time);
+                  if ($listParams <> NULL) {
+                    $horaInicial = $listParams[0][6];
+                    $minutosASumar = intval($listParams[0][5]);
+                    $fechaHora = DateTime::createFromFormat('H:i:s', $horaInicial);
+                    $fechaHora->add(new DateInterval('PT' . $minutosASumar . 'M'));
+                    $horaResultante = $fechaHora->format('H:i');
+                    if ($time <= $horaResultante) {
+                    } else {
+                      $conectarDB->killConn();
+                      echo "<script>window.location='index.php?err=Late&hora=$horaResultante';</script>";
+                    }
+                  } else {
+                    echo "<script>window.location='index.php?err=noParams';</script>";
+                    $conectarDB->killConn();
+                  }
+
+                  ////////////////////////////////
                   function verificador($verificarFechaAsistencia, $conectarDB, $consultarDni, $n, $a, $date)
                   {
                     if ($verificarFechaAsistencia == False) {
@@ -180,6 +207,7 @@ Toast.fire({
 })  
 
                             </script>";
+
                       $consulta = Alumno::insertarAsistencia($consultarDni, $date);
                       $cargarAsistencia = $conectarDB->ejecutar($consulta);
                       $birthday = Alumno::cumple($date, $consultarDni);
@@ -384,7 +412,6 @@ Toast.fire({
   </div>
   </form>
   </div>
-
   <style>
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
@@ -392,9 +419,21 @@ Toast.fire({
     }
   </style>
   <script src="../QuienVino/Resources/js/bootstrap.bundle.min.js"></script>
+  <?php
+  if (isset($_GET["err"])) {
+    if (!empty($_GET["err"])) {
+      switch ($_GET["err"]) {
+        case 'Late':
+          echo "<script>Swal.fire('Imposible cargar la asistencia!', 'El alumno ha llegado tarde.', 'error');</script>";
+          break;
+        case 'noParams':
+          echo "<script>Swal.fire('Imposible cargar la asistencia!', 'Configure los parámetros del sistema.', 'warning');</script>";
+          break;
+      }
 
-  <!-- <script src="./Control/JS/quitarTablaIndex.js"></script> -->
-
+    }
+  }
+  ?>
 </body>
 
 </html>

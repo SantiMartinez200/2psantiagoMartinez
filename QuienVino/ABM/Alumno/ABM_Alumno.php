@@ -2,6 +2,8 @@
 include("../../../QuienVino/BD/conn.php");
 include("../../../QuienVino/Clases/Persona.php");
 include("../../../QuienVino/Clases/Alumno.php");
+include("../../Clases/Asistencia.php");
+include("../../Clases/Parametro.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +31,7 @@ include("../../../QuienVino/Clases/Alumno.php");
         </div>
       </a>
       <div class="d-flex justify-content-end">
-        <h1 class="text-light"><b>Registros</b></h1>
+        <h1 class="text-light"><b>Registros de Alumnos</b></h1>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -66,6 +68,19 @@ include("../../../QuienVino/Clases/Alumno.php");
               </li>
               <li><a class="dropdown-item text-dark"
                   href="https://www.linkedin.com/in/santiago-mart%C3%ADnez-681b38238/">Linkedin</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reportes</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="../../Reportes/diario.php">Reporte de asistencias</a>
+              </li>
+              <li><a class="dropdown-item text-dark" href="../../Reportes/promocionados.php">Reporte de
+                  promocionados</a></li>
+              <li><a class="dropdown-item text-dark" href="../../Reportes/regulares.php">Reporte de
+                  regulares</a></li>
+              <li><a class="dropdown-item text-dark" href="../../Reportes/libres.php">Reporte de libres</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -157,7 +172,7 @@ include("../../../QuienVino/Clases/Alumno.php");
           $listado = $ejecutar;
           $obj = $listado->fetch_all();
           //var_dump($obj);
-          if ($listado <> NULL) {
+          if ($obj <> NULL) {
             foreach ($listado as $row) { ?>
               <tr>
                 <td>
@@ -229,6 +244,7 @@ include("../../../QuienVino/Clases/Alumno.php");
             }
           } else {
             ?>
+
           </tbody>
         </table>
         <div class="alert alert-warning">
@@ -326,6 +342,31 @@ include("../../../QuienVino/Clases/Alumno.php");
                         ";
         echo '<script>' . $ejec . '</script>';
         break;
+
+    }
+  }
+  if (isset($_GET["err"])) {
+    if (!empty($_GET["err"])) {
+      switch ($_GET["err"]) {
+        case 'Late':
+          echo "<script>function fireSweetAlert(){
+                        Swal.fire(
+                          'Imposible registrar la asistencia!',
+                          'El alumno ha llegado tarde.',
+                          'error'
+                        )};
+                        fireSweetAlert();</script>";
+          break;
+        case 'noParams':
+          echo "<script>Swal.fire('Imposible cargar la asistencia!', 'Configure los parámetros del sistema.', 'warning');</script>";
+          break;
+        case 'noParamsRegister':
+          echo "<script>Swal.fire('Imposible registrar alumno!', 'Configure los parámetros del sistema.', 'warning');</script>";
+          break;
+        case 'noParamsModify':
+          echo "<script>Swal.fire('Imposible modificar alumno!', 'Configure los parámetros del sistema.', 'warning');</script>";
+          break;
+      }
 
     }
   }

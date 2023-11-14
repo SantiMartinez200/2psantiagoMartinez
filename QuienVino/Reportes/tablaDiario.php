@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Reporte diario</title>
         <link rel="stylesheet" href="../Resources/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../styletabla.css">
+        <link rel="stylesheet" href="./CSS/styletabla.css">
         <link rel="stylesheet" href="../Resources/css/sweetalert2.min.css" />
       </head>
 
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
               </div>
             </a>
             <div class="d-flex justify-content-end">
-              <h1 class="text-light"><b>¿QuienVino?</b></h1>
+              <h1 class="text-light"><b>Reportes</b></h1>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
               <span class="navbar-toggler-icon"></span>
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                   <tr>
                     <th colspan=5>
                       <div class="alert alert-warning border border-dark">
-                        <h3>No hay asistencias generadas este día</h3>
+                        <h3>No hay asistencias registradas este día</h3>
                       </div>
                     </th>
                   </tr>

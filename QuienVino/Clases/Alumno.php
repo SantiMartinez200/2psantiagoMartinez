@@ -109,5 +109,10 @@ class Alumno extends Persona
     return $cumple;
   }
 
+  public static function deleteAll(){
+    $sql = ("DELETE FROM alumno");
+    return $sql;
+  }
+
 }
 ?>

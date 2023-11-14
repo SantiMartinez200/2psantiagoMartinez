@@ -12,7 +12,23 @@ Class Asistencia{
     return $calendarQuery;
   }
 
-  
+  public static function llegaTarde($time, $horaResultante){
+    if ($time <= $horaResultante){
+      return false;
+    }elseif($time > $horaResultante){
+      return true;
+    }
+  }
+
+  public static function deleteALL(){
+    $deleteAll = ("DELETE from asistencia");
+    return $deleteAll;
+  }
+
+  public static function resetID(){
+    $reset = ("ALTER TABLE asistencia AUTO_INCREMENT = 1;");
+    return $reset; 
+  }
 }
 
 ?>

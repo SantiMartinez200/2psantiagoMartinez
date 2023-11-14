@@ -63,6 +63,19 @@
                   href="https://www.linkedin.com/in/santiago-mart%C3%ADnez-681b38238/">Linkedin</a></li>
             </ul>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reportes</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" href="../Reportes/diario.php">Reporte de asistencias</a>
+              </li>
+              <li><a class="dropdown-item text-dark" href="../Reportes/promocionados.php">Reporte de
+                  promocionados</a></li>
+              <li><a class="dropdown-item text-dark" href="../Reportes/regulares.php">Reporte de
+                  regulares</a></li>
+              <li><a class="dropdown-item text-dark" href="../Reportes/libres.php">Reporte de libres</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -86,7 +99,7 @@
           </div>
 
         </label></div>
-      <div class="row"><input class="form-control border-3" type="number" name="dni" id="dni" autofocus="autofocus">
+      <div class="row"><input class="form-control border-3" type="number" name="dni" id="dni">
       </div>
       <div class="row"><input class="form-control border-3 text-center" type="date" name="fecha_tardia"
           id="fecha_tardia" max="<?php echo date("Y-m-d") ?>">
@@ -108,14 +121,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (isset($_POST["dni"]) && isset($_POST["fecha_tardia"])) {
     if (!empty($_POST["dni"]) && !empty($_POST["fecha_tardia"])) {
       $fechaTardia = $_POST["fecha_tardia"];
-
       $dni = $_POST["dni"];
       $conectarDB = new Conexion;
       $conectarDB->connect();
+      $paramQuery = Parametro::traerParametros();
+      $paramExecute = $conectarDB->ejecutar($paramQuery);
+      $paramList = $paramExecute->fetch_all();
+      $horafija = "";
+      if ($paramList <> NULL) {
+        $horafija = $paramList[0][6];
+      } else {
+        echo ("<script>window.location='./parametros.php?err=noParams'</script>");
+        $conectarDB->killConn();
+      }
       $queryVerificar = Alumno::verificarIngresoAsistencia($dni, $fechaTardia);
       $fechaTardiaISO = date("Y-m-d", strtotime($fechaTardia));
       if ($queryVerificar == false) {
         try {
+          $fechaTardia = $fechaTardia . ' ' . $horafija;
           $query = Alumno::insertarAsistencia($dni, $fechaTardia);
           $ejecutar = $conectarDB->ejecutar($query);
         } catch (mysqli_sql_exception $e) {
@@ -234,8 +257,8 @@ Toast.fire({
 
                             </script>";
         $date = Date("Y-m-d H:i:s");
-        
-        
+
+
         $birthday = Alumno::cumple($date, $dni);
         $execBirthday = $conectarDB->ejecutar($birthday);
         $listBirthday = $execBirthday->fetch_all();

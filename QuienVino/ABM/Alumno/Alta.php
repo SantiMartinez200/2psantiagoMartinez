@@ -32,6 +32,10 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
         $apellidoInsertar = $_POST["apellido"];
         $dniInsertar = $_POST["dni"];
         $fechaNacimiento = $_POST["fechaNacimiento"];
+        if ($fetchParams == NULL) {
+          echo "<script>window.location='ABM_Alumno.php?err=noParamsRegister';</script>";
+          $conectarDB->killConn();
+        }
         if ((strlen($nombreInsertar) < 30) && (strlen($apellidoInsertar) < 30) && (($dniInsertar < 99999999) && ($dniInsertar > 0)) && (($edad >= $fetchParams->edad_minima) && ($fetchParams->edad_minima <> NULL))) {
           if ((preg_match("/^[a-zA-Z\p{L}\s]+$/i", $nombreInsertar)) && (preg_match("/^[a-zA-Z\p{L}\s]+$/i", $apellidoInsertar))) {
             $alumno = new Alumno($nombreInsertar, $apellidoInsertar, $dniInsertar, $fechaNacimiento);
@@ -40,14 +44,14 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
               $traerAlumno = $conectarDB->ejecutar($sql);
             } catch (mysqli_sql_exception $e) {
               if (str_contains($e, 'Duplicate entry')) {
-                echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=1'</script>"; 
+                echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=1'</script>";
               } else {
                 die(print_r("<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=2'</script>"));
               }
             }
             echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=6'</script>";
           } else {
-             echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=3'</script>"; 
+            echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=3'</script>";
           }
         } else {
           echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=4'</script>";

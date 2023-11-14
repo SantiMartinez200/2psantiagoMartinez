@@ -35,11 +35,12 @@ El sistema de toma de asistencias debe utilizar:
 
 - Si un alumno no llega a horario de clases, y todavía llega más tarde que el horario con tolerancia; el sistema no debe cargar su asistencia.
 
+- El sistema deberá permitir la eliminación de registros; esto es: la eliminación total de los registros de alumno, asistencias o parámetros. Se recomienda no operar el sistema sin parámetros. Su eliminación solo se dispone para comodidad de actualización de registros.
+
+
 EXTRA:
-- El sistema debe tener una sección por separado, que va a indicar datos extras como:
+- El sistema debe tener una sección por separado, que va a imprimir reportes sobre datos de interés como:
       * Los alumnos que promocionan
       * Los alumnos que están regulares
       * Los alumnos que están libres
-      * El alumno con más asistencias
-      * El alumno con menos asistencias
-      * Los alumnos SIN asistencias.
+      * Las sistencias de un día especificado por el usuario

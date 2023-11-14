@@ -14,7 +14,7 @@ $conectarDB->connect();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reporte Regulares</title>
   <link rel="stylesheet" href="../Resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../styletabla.css">
+  <link rel="stylesheet" href="./CSS/styletabla.css">
   <link rel="stylesheet" href="../Resources/css/sweetalert2.min.css" />
 </head>
 
@@ -30,7 +30,7 @@ $conectarDB->connect();
         </div>
       </a>
       <div class="d-flex justify-content-end">
-        <h1 class="text-light"><b>¿QuienVino?</b></h1>
+        <h1 class="text-light"><b>Reportes</b></h1>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -92,7 +92,7 @@ $conectarDB->connect();
       </div>
     </div>
   </nav>
-   <div class="container text-center mb-2">
+  <div class="container text-center mb-2">
     <button class="btn btn-primary" id="pdfout">Exportar como PDF</button>
   </div>
   <div class="bg-primary text-light rounded border text-center form-control" id="maintable">
@@ -168,6 +168,15 @@ $conectarDB->connect();
                   </td>
                 </tr>
                 <?php
+              } elseif ($listadoParametros == NULL) {
+                ?>
+                <?php
+                echo "<th colspan='5' class='alert alert-danger mt-1 h-25 w-25'> <h5>Imposible calcular, parámetros requeridos.</h5></th>";
+
+                ?>
+
+                <?php
+                break;
               }
             }
             ?>
@@ -180,21 +189,19 @@ $conectarDB->connect();
             </tr>
             <?php
             //var_dump($listadoParametros);
-            if ($listadoParametros == NULL) {
-              ?>
-            </tbody>
-          </table>
-          <?php
-          echo "<div class='alert alert-danger mt-1'> Imposible calcular, parámetros requeridos. </div>";
-            }
+          
           } else {
             ?>
-        </tbody>
-        </table>
+                  <tr>
+                    <th colspan=5>
+                      <div class="alert alert-warning border border-dark">
+                        <h3>No hay alumnos que tengan asistencias</h3>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
       </div>
-    </div>
-    <div class="alert alert-warning">
-      <h3>Aún no hay alumnos que tengan asistencias</h3>
     </div>
     <?php
           }
@@ -244,4 +251,5 @@ $conectarDB->connect();
     };
   </script>
 </body>
+
 </html>

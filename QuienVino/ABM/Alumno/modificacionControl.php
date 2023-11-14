@@ -32,9 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
         $sqlParam = Parametro::traerParametros();
         $ejecutarSqlParam = $conectarDB->ejecutar($sqlParam);
         $fetchParams = $ejecutarSqlParam->fetch_object();
-        var_dump($fetchParams);
+        //var_dump($fetchParams);
         $caughtDate = $_POST["fechaNacimiento"];
-
+          if ($fetchParams == NULL) {
+            echo "<script>window.location='ABM_Alumno.php?err=noParamsModify';</script>";
+            $conectarDB->killConn();
+          }
         if ((strlen($caughtName) < 30) && (strlen($caughtSurname) < 30) && (($dniColocado < 99999999) && ($dniColocado > 0) && ($DNIoriginal < 99999999) && ($DNIoriginal > 0)) && (($edad >= $fetchParams->edad_minima) && ($fetchParams->edad_minima <> NULL))) {
           if ((preg_match("/^[a-zA-Z\p{L}\s]+$/i", $caughtName)) && (preg_match("/^[a-zA-Z\p{L}\s]+$/i", $caughtSurname))) {
             $conectarDB = new Conexion();
