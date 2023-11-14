@@ -21,7 +21,6 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["dni"]) || isset($_POST["nombre"]) || isset($_POST["apellido"]) || isset($_POST["fechaNacimiento"])) {
       if (!empty($_POST["dni"]) && !empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["fechaNacimiento"])) {
-        ///////////////////////////////////////////////////////////
         $edad = Alumno::obtenerEdad(date("Y-m-d H:i:s"), $_POST["fechaNacimiento"]);
         $conectarDB = new Conexion();
         $conectarDB->connect();

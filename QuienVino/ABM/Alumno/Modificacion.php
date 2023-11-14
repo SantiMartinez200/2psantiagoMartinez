@@ -15,7 +15,6 @@ if (isset($_GET["dni"])) {
       <link rel="stylesheet" href="../../Resources/css/bootstrap.min.css" />
       <link rel="stylesheet" href="../../Resources/css/sweetalert2.min.css" />
     </head>
-
     <body>
       <script src="../../Resources/js/jquery-3.7.1.min.js"></script>
       <script src="../../Resources/js/sweetalert2.all.min.js"></script>
@@ -89,7 +88,6 @@ if (isset($_GET["dni"])) {
             </a>
             <ul class="dropdown-menu text-dark">
               <li><a class="dropdown-item text-dark" href="../../Control/parametros.php">Parámetros</a></li>
-              <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li> -->
             </ul>
           </div>
         </div>
@@ -97,7 +95,6 @@ if (isset($_GET["dni"])) {
       <div class="todo">
         <?php
         $dni = $_GET["dni"];
-        //echo ($dni);
         $conectarDB = new Conexion();
         $sql = Alumno::getAlumno($dni);
         $ejecutar = $conectarDB->ejecutar($sql);

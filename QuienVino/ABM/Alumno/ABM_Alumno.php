@@ -119,13 +119,13 @@ include("../../Clases/Parametro.php");
         </div>
       </div>
       <div class="row">
-        <?php //////////////////////////////////////// ?>
+        
         <div class="col">
           <label for="identificacion" class="container__label">DNI:</label>
           <div class="d-flex justify-content-center"><input type="number"
               class="container__input form-control w-50 border border-dark" name="dni" id="identificacion"></div>
         </div>
-        <?php //////////////////////////////////////// ?>
+        
         <div class="col">
           <label for="fechado" class="container__label">Fecha de nacimiento:</label>
           <div class="d-flex justify-content-center"><input type="date"

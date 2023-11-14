@@ -127,11 +127,8 @@ Toast.fire({
 
           break;
       }
-
     }
   }
   ?>
 </body>
-
 </html>
-<!-- tablaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->

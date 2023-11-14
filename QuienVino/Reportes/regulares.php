@@ -118,7 +118,6 @@ $conectarDB->connect();
           $consulta = Alumno::contarAsistencias();
           $traerDatos = $conectarDB->ejecutar($consulta);
           $resultado = $traerDatos->fetch_all();
-          //var_dump($resultado);
           if ($resultado <> NULL) {
             $regular = 0;
             foreach ($resultado as $eachResult => $value) {
@@ -187,9 +186,7 @@ $conectarDB->connect();
                 </h4>
               </th>
             </tr>
-            <?php
-            //var_dump($listadoParametros);
-          
+            <?php          
           } else {
             ?>
                   <tr>
@@ -221,10 +218,7 @@ $conectarDB->connect();
       var margin = 20;
       var scale = (doc.internal.pageSize.width - margin * 2) / document.body.clientWidth;
       var scale_mobile = (doc.internal.pageSize.width - margin * 2) / document.body.getBoundingClientRect();
-
-      // checking
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // mobile
         doc.html(maintable, {
           x: margin,
           y: margin,
@@ -236,7 +230,6 @@ $conectarDB->connect();
           }
         });
       } else {
-        // PC
         doc.html(maintable, {
           x: margin,
           y: margin,

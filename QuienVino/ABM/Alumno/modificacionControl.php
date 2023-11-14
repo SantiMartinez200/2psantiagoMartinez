@@ -20,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
     <?php
     if (isset($_POST["dniOriginal"]) && isset($_POST["dniToCatch"]) && isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["fechaNacimiento"])) {
       if (!empty($_POST["dniOriginal"]) && !empty($_POST["dniToCatch"]) && !empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["fechaNacimiento"])) {
-        ///////////////////////////////////////////////////////////
-  
         $DNIoriginal = $_POST["dniOriginal"];
         $dniColocado = $_POST["dniToCatch"];
         $caughtName = $_POST["nombre"];
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
         $sqlParam = Parametro::traerParametros();
         $ejecutarSqlParam = $conectarDB->ejecutar($sqlParam);
         $fetchParams = $ejecutarSqlParam->fetch_object();
-        //var_dump($fetchParams);
         $caughtDate = $_POST["fechaNacimiento"];
           if ($fetchParams == NULL) {
             echo "<script>window.location='ABM_Alumno.php?err=noParamsModify';</script>";
@@ -64,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
           echo "<script>window.location.href='ABM_Alumno.php?var=fireSweetAlert()?errno=5'</script>";
         }
     }
-
     $conectarDB->killConn(); ?>
     <style>
       input[type="number"]::-webkit-inner-spin-button,
@@ -74,8 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
     </style>
     <script src="../../../QuienVino/Resources/js/bootstrap.bundle.min.js"></script>
   </body>
-  
-
   </html>
   <?php
 }

@@ -30,7 +30,7 @@ $conectarDB->connect();
         </div>
       </a>
       <div class="d-flex justify-content-end">
-       <h1 class="text-light"><b>Reportes</b></h1>
+        <h1 class="text-light"><b>Reportes</b></h1>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -87,7 +87,6 @@ $conectarDB->connect();
         </a>
         <ul class="dropdown-menu text-dark">
           <li><a class="dropdown-item text-dark" href="../Control/parametros.php">Parámetros</a></li>
-          <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li> -->
         </ul>
       </div>
     </div>
@@ -118,7 +117,6 @@ $conectarDB->connect();
           $consulta = Alumno::contarAsistencias();
           $traerDatos = $conectarDB->ejecutar($consulta);
           $resultado = $traerDatos->fetch_all();
-          //var_dump($resultado);
           if ($resultado <> NULL) {
             $libre = 0;
             foreach ($resultado as $eachResult => $value) {
@@ -187,8 +185,6 @@ $conectarDB->connect();
               </th>
             </tr>
             <?php
-            //var_dump($listadoParametros);
-          
           } else {
             ?>
             <tr>
@@ -205,13 +201,10 @@ $conectarDB->connect();
     <?php
           }
           ?>
-
   </tbody>
   </table>
   </div>
   </div>
-
-
   <script>
     window.jsPDF = window.jspdf.jsPDF;
     var maintable = document.getElementById('maintable'),
@@ -222,10 +215,7 @@ $conectarDB->connect();
       var margin = 20;
       var scale = (doc.internal.pageSize.width - margin * 2) / document.body.clientWidth;
       var scale_mobile = (doc.internal.pageSize.width - margin * 2) / document.body.getBoundingClientRect();
-
-      // checking
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // mobile
         doc.html(maintable, {
           x: margin,
           y: margin,
@@ -237,7 +227,6 @@ $conectarDB->connect();
           }
         });
       } else {
-        // PC
         doc.html(maintable, {
           x: margin,
           y: margin,

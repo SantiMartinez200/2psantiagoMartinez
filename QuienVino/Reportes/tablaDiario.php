@@ -10,10 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
       $reporte = Asistencia::calendarioAsistencia($fechaReporte);
       $ejecutarReporte = $conectarDB->ejecutar($reporte);
       $listadoReporte = $ejecutarReporte->fetch_all();
-      //var_dump($listadoReporte);
-
-
-      //array(11) { [0]=> array(7) { [0]=> string(3) "346" [1]=> string(8) "42850626" [2]=> string(19) "2023-11-10 00:20:42" [3]=> string(8) "42850626" [4]=> string(6) "Lucas " [5]=> string(29) "Barreiro " [6]=> string(10) "2000-12-12" }
       ?>
       <!DOCTYPE html>
       <html lang="en">
@@ -96,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
               </a>
               <ul class="dropdown-menu text-dark">
                 <li><a class="dropdown-item text-dark" href="../Control/parametros.php">Parámetros</a></li>
-                <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li> -->
               </ul>
             </div>
           </div>
@@ -175,9 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             </table>
           </div>
         </div>
-
-        <!-- tablaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-
         <script>
           window.jsPDF = window.jspdf.jsPDF;
           var maintable = document.getElementById('maintable'),
@@ -189,9 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             var scale = (doc.internal.pageSize.width - margin * 2) / document.body.clientWidth;
             var scale_mobile = (doc.internal.pageSize.width - margin * 2) / document.body.getBoundingClientRect();
 
-            // checking
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-              // mobile
               doc.html(maintable, {
                 x: margin,
                 y: margin,
@@ -203,7 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 }
               });
             } else {
-              // PC
               doc.html(maintable, {
                 x: margin,
                 y: margin,

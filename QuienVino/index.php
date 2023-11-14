@@ -80,7 +80,6 @@
         </a>
         <ul class="dropdown-menu text-dark">
           <li><a class="dropdown-item text-dark" href="./Control/parametros.php">Parámetros</a></li>
-          <!-- <li><a class="dropdown-item text-dark" href="../../../QuienVino/Control/logOut.php">Cerrar Sesión</a></li> -->
         </ul>
       </div>
     </div>
@@ -161,13 +160,10 @@ setTimeout(function(){
                   $a = $alumnos[0][2];
                   $trimmedDate = date("Y-m-d");
                   $verificarFechaAsistencia = Alumno::verificarIngresoAsistencia($consultarDni, $trimmedDate);
-                  ////////////////////////////////
                   $traerParametros = Parametro::traerParametros();
                   $execParams = $conectarDB->ejecutar($traerParametros);
                   $listParams = $execParams->fetch_all();
-                  //var_dump($listParams);
                   $time = date("H:i");
-                  //var_dump($time);
                   if ($listParams <> NULL) {
                     $horaInicial = $listParams[0][6];
                     $minutosASumar = intval($listParams[0][5]);
@@ -183,8 +179,6 @@ setTimeout(function(){
                     echo "<script>window.location='index.php?err=noParams';</script>";
                     $conectarDB->killConn();
                   }
-
-                  ////////////////////////////////
                   function verificador($verificarFechaAsistencia, $conectarDB, $consultarDni, $n, $a, $date)
                   {
                     if ($verificarFechaAsistencia == False) {

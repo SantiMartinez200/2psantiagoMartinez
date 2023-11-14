@@ -30,12 +30,4 @@ class Conexion
   }
 
 }
-
-// Function desconectar mysqli_close($this->$mysql);
-
-
-
-
-//print_r(Conexion::connect());
-
 ?>

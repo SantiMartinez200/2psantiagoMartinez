@@ -21,7 +21,6 @@ $a = $alumnos[0][2];
 $traerParametros = Parametro::traerParametros();
 $execParams = $conectarDB->ejecutar($traerParametros);
 $listParams = $execParams->fetch_all();
-//var_dump($listParams);
 $time = date("H:i");
 if ($listParams <> NULL) {
   $horaInicial = $listParams[0][6];
@@ -38,20 +37,6 @@ if ($listParams <> NULL) {
   echo "<script>window.location='ABM_Alumno.php?err=noParams';</script>";
   $conectarDB->killConn();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $consulta = Alumno::insertarAsistencia($dni, $date);
 $cargarAsistencia = $conectarDB->ejecutar($consulta);
 $birthday = Alumno::cumple($date, $dni);
